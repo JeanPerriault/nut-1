@@ -1,50 +1,33 @@
-# [Network UPS Tools Overview]
+# [Network UPS Tools Overview](http://www.networkupstools.org)
 
-== Description ==
+## Description
 
-Network UPS Tools is a collection of programs which provide a common
-interface for monitoring and administering UPS, PDU and SCD hardware.
-It uses a layered approach to connect all of the parts.
+Network UPS Tools is a collection of programs which provide a common interface for monitoring and administering UPS, PDU and SCD hardware. It uses a layered approach to connect all of the parts.
 
-Drivers are provided for a wide assortment of equipment.  They
-understand the specific language of each device and map it back to a
-compatibility layer.  This means both an expensive high end UPS, a simple
-"power strip" PDU, or any other power device can be handled transparently with
-a uniform management interface.
+Drivers are provided for a wide assortment of equipment. They understand the specific language of each device and map it back to a compatibility layer. This means both an expensive high end UPS, a simple "power strip" PDU, or any other power device can be handled transparently with a uniform management interface.
 
-This information is cached by the network server `upsd`, which then
-answers queries from the clients.  upsd contains a number of access
-control features to limit the abilities of the clients.  Only authorized
-hosts may monitor or control your hardware if you wish.  Since the
-notion of monitoring over the network is built into the software, you
-can hang many systems off one large UPS, and they will all shut down
-together. You can also use NUT to power on, off or cycle your data center
-nodes, individually or globally through PDU outlets.
+This information is cached by the network server `upsd`, which then answers queries from the clients.
+'upsd' contains a number of access control features to limit the abilities of the clients.
+Only authorized hosts may monitor or control your hardware if you wish.
+Since the notion of monitoring over the network is built into the software, you can hang many systems off one large UPS, and they will all shut down together. You can also use NUT to power on, off or cycle your data center nodes, individually or globally through PDU outlets.
 
-Clients such as `upsmon` check on the status of the hardware and do things
-when necessary.  The most important task is shutting down the operating
-system cleanly before the UPS runs out of power.  Other programs are
-also provided to log information regularly, monitor status through your
-web browser, and more.
+Clients such as `upsmon` check on the status of the hardware and do things when necessary.
+The most important task is shutting down the operating system cleanly before the UPS runs out of power.
+Other programs are also provided to log information regularly, monitor status through your web browser, and more.
 
 
-== Installing ==
+## Installing
 
-If you are installing these programs for the first time, go read the
-<<_installation_instructions,installation instructions>>
-to find out how to do that.  This document contains more information on what all
-of this stuff does.
+If you are installing these programs for the first time, go read the <<_installation_instructions,installation instructions>> to find out how to do that. This document contains more information on what all of this stuff does.
 
 
-== Upgrading ==
+## Upgrading
 
-When upgrading from an older version, always check the
-<<Upgrading_notes,upgrading notes>> to see what may have
-changed.  Compatibility issues and other changes will be listed there to ease
-the process.
+When upgrading from an older version, always check the <<Upgrading_notes,upgrading notes>> to see what may have changed.
+Compatibility issues and other changes will be listed there to ease the process.
 
 
-== Configuring and using ==
+## Configuring and using
 
 Once NUT is installed, refer to the
 <<Configuration_notes,configuration notes>> for directions.
