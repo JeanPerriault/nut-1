@@ -182,9 +182,9 @@ For example, it is available on Debian systems as:
 /usr/share/nut/driver.list
 ```
 
-This table is also available link:http://www.networkupstools.org/stable-hcl.html[online].
+This table is also available on official NUT website: [Stable Hardware Compatibility List](http://www.networkupstools.org/stable-hcl.html)
 
-If your driver has vanished, see the link:FAQ.html[FAQ] and <<Upgrading_notes,Upgrading notes>>.
+If your driver has vanished, see the link: [FAQ](http://www.networkupstools.org/docs/FAQ.html) and <<Upgrading_notes,Upgrading notes>>.
 
 
 ### Generic Device Drivers
@@ -323,12 +323,12 @@ This can be useful in shell scripts for monitoring something without writing you
 Just run `upsc <ups>` to see what's going on, i.e.:
 
 ```
-	morbo:~$ upsc sparky@localhost
-	ambient.humidity: 035.6
-	ambient.humidity.alarm.maximum: NO,NO
-	ambient.humidity.alarm.minimum: NO,NO
-	ambient.temperature: 25.14
-	...
+morbo:~$ upsc sparky@localhost
+ambient.humidity: 035.6
+ambient.humidity.alarm.maximum: NO,NO
+ambient.humidity.alarm.minimum: NO,NO
+ambient.temperature: 25.14
+...
 ```
 
 If you are interested in writing a simple client that monitors `upsd`, the source code for `upsc` is a good way to learn about using the upsclient functions.
@@ -470,7 +470,9 @@ It is not active by default.
 
 The version numbers work like this: if the middle number is odd, it's a development tree, otherwise it is the stable tree.
 
-The past stable trees were 1.0, 1.2, 1.4, 2.0, 2.2 and 2.4, with the latest stable tree designated 2.6.  The development trees were 1.1, 1.3, 1.5, 2.1 and 2.3.
+The past stable trees were 1.0, 1.2, 1.4, 2.0, 2.2 and 2.4, with the latest stable tree designated 2.6.
+
+The development trees were 1.1, 1.3, 1.5, 2.1 and 2.3.
 
 As of the 2.4 release, there is no real development branch anymore since the code is available through a revision control system (namely Subversion) and snapshots.
 
@@ -512,57 +514,41 @@ Here's a table to make it easier to visualize:
       <th colspan="4">Server version</th>
     </tr>
     <tr>
-      <th><b>Client version</b></td>
+      <th>Client version</th>
       <th>1.0</th>
       <th>1.2</th>
       <th>1.4</th>
       <th>2.0+</th>
     </tr>
     <tr>
-      <td>1.0</td>
+      <th>1.0</th>
       <td>yes</td>
       <td>yes</td>
       <td>yes</td>
       <td>no</td>
     </tr>
     <tr>
-      <td>1.2</td>
+      <th>1.2</th>
       <td>yes</td>
       <td>yes</td>
       <td>yes</td>
       <td>no</td>
     </tr>
     <tr>
-      <td>1.4</td>
+      <th>1.4</th>
       <td>yes</td>
       <td>yes</td>
       <td>yes</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>2.0+</td>
+      <th>2.0+</th>
       <td>no</td>
       <td>no</td>
       <td>yes</td>
       <td>yes</td>
     </tr>
 </table>
-
-
-| *                   | Server version | | | |
-| *Client version*    | 1.0 | 1.2 | 1.4 | 2.0+ |
-| ------------------- | --- | --- | --- | ---- |
-| 1.0                 | yes | yes | yes | no   |
-| 1.2                 | yes | yes | yes | no   |
-| 1.4                 | yes | yes | yes | yes  |
-| 2.0+                | no  | no  | yes | yes  |
-
-
-| Name | Description          |
-| ------------- | ----------- |
-| Help      | Display the help window.|
-| Close     | Closes a window     |
-
 
 Version 2.0, and more recent, do not contain backwards compatibility for the old protocol and variable/command names. As a result, 2.0 clients can't talk to anything older than a 1.4 server.
 
@@ -577,12 +563,13 @@ If `upsd` returns 'ERR UNKNOWN-COMMAND' to a GET request, you need to use REQ.
 
 ## Support And Help
 
-If you are in need of help, refer to http://www.networkupstools.org/support.html
+If you are in need of help, refer to NUT official website:
+* [Support Page](http://www.networkupstools.org/support.html)
 
 
 ## Hacking And Development Info
 
-Additional documentation can be found in:
+Additional documentation can be found on NUT official website:
 * [Developer Guide](http://www.networkupstools.org/docs/developer-guide.chunked/index.html)
 * [Packager Guide](http://www.networkupstools.org/docs/packager-guide.chunked/index.html)
 
