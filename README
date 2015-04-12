@@ -1,8 +1,6 @@
-Network UPS Tools Overview
-===========================
+= Network UPS Tools Overview =
 
-Description
------------
+== Description ==
 
 Network UPS Tools is a collection of programs which provide a common
 interface for monitoring and administering UPS, PDU and SCD hardware.
@@ -30,8 +28,7 @@ also provided to log information regularly, monitor status through your
 web browser, and more.
 
 
-Installing
-----------
+== Installing ==
 
 If you are installing these programs for the first time, go read the
 <<_installation_instructions,installation instructions>>
@@ -39,8 +36,7 @@ to find out how to do that.  This document contains more information on what all
 of this stuff does.
 
 
-Upgrading
----------
+== Upgrading ==
 
 When upgrading from an older version, always check the
 <<Upgrading_notes,upgrading notes>> to see what may have
@@ -48,23 +44,20 @@ changed.  Compatibility issues and other changes will be listed there to ease
 the process.
 
 
-Configuring and using
----------------------
+== Configuring and using ==
 
 Once NUT is installed, refer to the
 <<Configuration_notes,configuration notes>> for directions.
 
 
-Documentation
--------------
+== Documentation ==
 
 This is just an overview of the software.  You should read the man pages,
 included example configuration files, and auxiliary documentation for the parts
 that you intend to use.
 
 
-Network Information
--------------------
+== Network Information ==
 
 These programs are designed to share information over the network.  In
 the examples below, `localhost` is used as the hostname.  This can also
@@ -92,20 +85,18 @@ The general form for UPS identifiers is this:
 Keep this in mind when viewing the examples below.
 
 
-Manifest
---------
+== Manifest ==
 
 This package is broken down into several categories:
 
-- *drivers*	- These programs talk directly to your UPS hardware.
-- *server*	- upsd serves data from the drivers to the network.
-- *clients*	- They talk to upsd and do things with the status data.
-- *cgi-bin*	- Special class of clients that you can use with your web server.
-- *scripts*	- Contains various scripts, like the Perl and Python binding,
+* *drivers*	- These programs talk directly to your UPS hardware.
+* *server*	- upsd serves data from the drivers to the network.
+* *clients*	- They talk to upsd and do things with the status data.
+* *cgi-bin*	- Special class of clients that you can use with your web server.
+* *scripts*	- Contains various scripts, like the Perl and Python binding,
 integration bits and applications. 
 
-Drivers
--------
+== Drivers ==
 
 These programs provide support for specific UPS models.  They understand
 the protocols and port specifications which define status information
@@ -483,8 +474,7 @@ list.  There have also been a number of architectural changes which
 may not be noticeable to most users, but which can impact developers.
 
 
-Backwards and Forwards Compatibility
-------------------------------------
+== Backwards and Forwards Compatibility ==
 
 The old network code spans a range from about 0.41.1 when TCP support 
 was introduced up to the recent 1.4 series.  It used variable names
@@ -533,24 +523,21 @@ software can easily support both versions as long as they like.  If upsd
 returns 'ERR UNKNOWN-COMMAND' to a GET request, you need to use REQ.
 
 
-Support / Help / etc.
----------------------
+== Support / Help / etc. ==
 
 If you are in need of help, refer to the
 <<Support_Request,Support instructions>> in the user manual.
 
 
-Hacking / Development Info
---------------------------
+== Hacking / Development Info ==
 
 Additional documentation can be found in:
 
-- the linkdoc:developer-guide[Developer Guide],
-- the linkdoc:packager-guide[Packager Guide].
+* the linkdoc:developer-guide[Developer Guide],
+* the linkdoc:packager-guide[Packager Guide].
 
 
-Acknowledgements / Contributions
---------------------------------
+== Acknowledgements / Contributions ==
 
 The many people who have participated in creating and improving NUT are
 listed in the user manual <<Acknowledgements,acknowledgements appendix>>.
