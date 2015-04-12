@@ -507,10 +507,10 @@ When 1.4 clients talk to 1.4 or 2.0 (or more recent) servers, they will use the 
 Here's a table to make it easier to visualize:
 
 <table>
-    <tr>
+    <th>
       <td>4+</td>
-      <td>Server version</td>
-    </tr>
+      <td colspan="4">Server version</td>
+    </th>
     <tr>
       <td>*Client version*</td>
       <td>1.0</td>
@@ -550,8 +550,9 @@ Here's a table to make it easier to visualize:
 
 
 |                   4+| Server version         |
+
 | *Client version*    | 1.0 | 1.2 | 1.4 | 2.0+ |
-|---------------------|-----|-----|-----|------|
+| ------------------- | --- | --- | --- | ---- |
 | 1.0                 | yes | yes | yes | no   |
 | 1.2                 | yes | yes | yes | no   |
 | 1.4                 | yes | yes | yes | yes  |
