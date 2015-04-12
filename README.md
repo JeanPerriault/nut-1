@@ -1,4 +1,41 @@
-# [Network UPS Tools Overview](http://www.networkupstools.org)
+# [Network UPS Tools](http://www.networkupstools.org)
+
+## Table of contents
+
+- [Description](#description)
+- [Installing](#installing)
+- [Upgrading](#upgrading)
+- [Configuring and using](#configuring-and-using)
+- [Documentation](#documentation)
+- [Network Information](#network-information)
+- [Manifest](#manifest)
+- [Drivers](#drivers)
+-- [Extra Settings](#extra-settings)
+-- [Hardware Compatibility List](#hardware-compatibility-list)
+-- [Generic Device Drivers](#generic-device-drivers)
+-- [UPS Shutdowns](#ups-shutdowns)
+-- [Power distribution unit management](#power-distribution-unit-management)
+- [Network Server](#network-server)
+- [Monitoring client](#monitoring-client)
+-- [Master](#master)
+-- [Slave](#slave)
+-- [Additional Information](#additional-information)
+- [Clients](#clients)
+-- [upsc](#upsc)
+-- [upslog](#upslog)
+-- [upsrw](#upsrw)
+-- [upscmd](#upscmd)
+- [CGI Programs](#cgi-programs)
+-- [Access Restrictions](#access-restrictions)
+-- [upsstats](#upsstats)
+-- [upsimage](#upsimage)
+-- [upsset](#upsset)
+- [Version Numbering](#version-numbering)
+- [Backwards and Forwards Compatibility](#backwards-and-forwards-compatibility)
+- [Support / Help / etc.](#support-help-etc.)
+- [Hacking / Development Info](#hacking/development-info)
+- [Acknowledgements / Contributions](#acknowledgements-contributions)
+
 
 ## Description
 
@@ -7,7 +44,7 @@ Network UPS Tools is a collection of programs which provide a common interface f
 Drivers are provided for a wide assortment of equipment. They understand the specific language of each device and map it back to a compatibility layer. This means both an expensive high end UPS, a simple "power strip" PDU, or any other power device can be handled transparently with a uniform management interface.
 
 This information is cached by the network server `upsd`, which then answers queries from the clients.
-'upsd' contains a number of access control features to limit the abilities of the clients.
+`upsd` contains a number of access control features to limit the abilities of the clients.
 Only authorized hosts may monitor or control your hardware if you wish.
 Since the notion of monitoring over the network is built into the software, you can hang many systems off one large UPS, and they will all shut down together. You can also use NUT to power on, off or cycle your data center nodes, individually or globally through PDU outlets.
 
@@ -15,6 +52,7 @@ Clients such as `upsmon` check on the status of the hardware and do things when 
 The most important task is shutting down the operating system cleanly before the UPS runs out of power.
 Other programs are also provided to log information regularly, monitor status through your web browser, and more.
 
+To get started, check out <http://www.networkupstools.org>!
 
 ## Installing
 
@@ -29,18 +67,16 @@ Compatibility issues and other changes will be listed there to ease the process.
 
 ## Configuring and using
 
-Once NUT is installed, refer to the
-<<Configuration_notes,configuration notes>> for directions.
+Once NUT is installed, refer to the <<Configuration_notes,configuration notes>> for directions.
 
 
-== Documentation ==
+## Documentation
 
-This is just an overview of the software.  You should read the man pages,
-included example configuration files, and auxiliary documentation for the parts
-that you intend to use.
+This is just an overview of the software.
+You should read the man pages, included example configuration files, and auxiliary documentation for the parts that you intend to use.
 
 
-== Network Information ==
+## Network Information
 
 These programs are designed to share information over the network.  In
 the examples below, `localhost` is used as the hostname.  This can also
@@ -68,26 +104,21 @@ The general form for UPS identifiers is this:
 Keep this in mind when viewing the examples below.
 
 
-== Manifest ==
+## Manifest
 
 This package is broken down into several categories:
 
-* *drivers*	- These programs talk directly to your UPS hardware.
-* *server*	- upsd serves data from the drivers to the network.
-* *clients*	- They talk to upsd and do things with the status data.
-* *cgi-bin*	- Special class of clients that you can use with your web server.
-* *scripts*	- Contains various scripts, like the Perl and Python binding,
-integration bits and applications. 
+- *drivers*	- These programs talk directly to your UPS hardware.
+- *server*	- upsd serves data from the drivers to the network.
+- *clients*	- They talk to upsd and do things with the status data.
+- *cgi-bin*	- Special class of clients that you can use with your web server.
+- *scripts*	- Contains various scripts, like the Perl and Python binding, integration bits and applications. 
 
-== Drivers ==
+## Drivers
 
-These programs provide support for specific UPS models.  They understand
-the protocols and port specifications which define status information
-and convert it to a form that upsd can understand.
+These programs provide support for specific UPS models. They understand the protocols and port specifications which define status information and convert it to a form that upsd can understand.
 
-To configure drivers, edit ups.conf.  For this example, we'll have a UPS
-called "sparky" that uses the apcsmart driver and is connected to
-`/dev/ttyS1`.  That's the second serial port on most Linux-based systems.
+To configure drivers, edit ups.conf.  For this example, we'll have a UPS called "sparky" that uses the apcsmart driver and is connected to `/dev/ttyS1`. That's the second serial port on most Linux-based systems.
 The entry in `ups.conf` looks like this:
 
 	[sparky]
@@ -108,8 +139,7 @@ However, you can also just start or stop one by adding its name:
 To find the driver name for your device, refer to the section below
 called "HARDWARE SUPPORT TABLE".
 
-Extra Settings
-~~~~~~~~~~~~~~
+### Extra Settings
 
 Some drivers may require additional settings to properly communicate
 with your hardware.  If it doesn't detect your UPS by default, check the
@@ -124,8 +154,7 @@ feature, just add another line to your ups.conf section for that UPS:
 		port = auto
 		serial = 1234567890
 
-Hardware Compatibility List
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Hardware Compatibility List
 
 The <<HCL,Hardware Compatibility List>> is available in the source directory
 ('nut-X.Y.Z/data/driver.list'), and is generally distributed with packages.
@@ -139,8 +168,7 @@ This table is also available link:http://www.networkupstools.org/stable-hcl.html
 If your driver has vanished, see the link:FAQ.html[FAQ] and
 <<Upgrading_notes,Upgrading notes>>.
 
-Generic Device Drivers
-~~~~~~~~~~~~~~~~~~~~~~
+### Generic Device Drivers
 
 NUT provides several generic drivers that support a variety of very similar models.
 
@@ -189,8 +217,7 @@ USB and networked APC UPS.
 +
 See the linkman:apcupsd-ups[8] man page for more information.
 
-UPS Shutdowns
-~~~~~~~~~~~~~
+### UPS Shutdowns
 
 upsdrvctl can also shut down (power down) all of your UPS hardware.
 
@@ -205,65 +232,49 @@ chapter to learn more about when to use this feature.  If called at the wrong
 time, you may cause data loss by turning off a system with a filesystem
 mounted read-write.
 
-Power distribution unit management
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Power distribution unit management
 
 NUT also provides an advanced support for power distribution units.
+You should read the <<Outlets_PDU_notes,Configuring automatic UPS shutdowns>> chapter to learn more about when to use this feature. 
 
-You should read the <<Outlets_PDU_notes,Configuring automatic UPS shutdowns>>
-chapter to learn more about when to use this feature. 
+## Network Server
 
-Network Server
---------------
+`upsd` is responsible for passing data from the drivers to the client programs via the network.
+It should be run immediately after `upsdrvctl` in your system's startup scripts.
 
-`upsd` is responsible for passing data from the drivers to the client
-programs via the network.  It should be run immediately after `upsdrvctl`
-in your system's startup scripts.
-
-`upsd` should be kept running whenever possible, as it is the only source
-of status information for the monitoring clients like `upsmon`.
+`upsd` should be kept running whenever possible, as it is the only source of status information for the monitoring clients like `upsmon`.
 
 
-Monitoring client
------------------
+## Monitoring client
 
-`upsmon` provides the essential feature that you expect to find in UPS
-monitoring software: safe shutdowns when the power fails.
+`upsmon` provides the essential feature that you expect to find in UPS monitoring software: safe shutdowns when the power fails.
 
-In the layered scheme of NUT software, it is a client.  It has this
-separate section in the documentation since it is so important.
+In the layered scheme of NUT software, it is a client.  It has this separate section in the documentation since it is so important.
 
-You configure it by telling it about UPSes that you want to monitor in
-upsmon.conf.  Each UPS can be defined as one of two possible types:
+You configure it by telling it about UPSes that you want to monitor in upsmon.conf.
+Each UPS can be defined as one of two possible types:
 
-Master
-~~~~~~
+### Master
 
-This UPS supplies power to the system running `upsmon`, and this system is also
-responsible for shutting it down when the battery is depleted.  This occurs
-after any slave systems have disconnected safely.
+This UPS supplies power to the system running `upsmon`, and this system is also responsible for shutting it down when the battery is depleted.
+This occurs after any slave systems have disconnected safely.
 
-If your UPS is plugged directly into a system's serial port, the `upsmon`
-process on that system should define that UPS as a master.
+If your UPS is plugged directly into a system's serial port, the `upsmon` process on that system should define that UPS as a master.
 
 For a typical home user, there's one computer connected to one UPS.
 That means you run a driver, `upsd`, and `upsmon` in master mode.
 
-Slave
-~~~~~
+### Slave
 
-This UPS may supply power to the system running `upsmon`, but this system can't
-shut it down directly.
+This UPS may supply power to the system running `upsmon`, but this system can't shut it down directly.
 
-Use this mode when you run multiple computers on the same UPS.  Obviously, only
-one can be connected to the serial port on the UPS, and that system is the
-master.  Everything else is a slave.
+Use this mode when you run multiple computers on the same UPS.  Obviously, only one can be connected to the serial port on the UPS, and that system is the master.
+Everything else is a slave.
 
 For a typical home user, there's one computer connected to one UPS.
 That means you run a driver, upsd, and upsmon in master mode.
 
-Additional Information
-~~~~~~~~~~~~~~~~~~~~~~
+### Additional Information
 
 More information on configuring upsmon can be found in these places:
 
@@ -273,8 +284,7 @@ More information on configuring upsmon can be found in these places:
 - The stock `upsmon.conf` that comes with the package
 
 
-Clients
--------
+## Clients
 
 Clients talk to upsd over the network and do useful things with the data
 from the drivers.  There are tools for command line access, and a few
@@ -283,8 +293,7 @@ programs.
 
 For more details on specific programs, refer to their man pages.
 
-upsc
-~~~~
+### upsc
 
 `upsc` is a simple client that will display the values of variables known
 to `upsd` and your UPS drivers.  It will list every variable by default,
@@ -309,15 +318,13 @@ upsclient functions.
 See the linkman:upsc[8] man page and
 <<nut-names,NUT command and variable naming scheme>> for more information.
 
-upslog
-~~~~~~
+### upslog
 
 `upslog` will write status information from `upsd` to a file at set
 intervals.  You can use this to generate graphs or reports with other
 programs such as `gnuplot`.
 
-upsrw
-~~~~~
+### upsrw
 
 `upsrw` allows you to display and change the read/write variables in your
 UPS hardware.  Not all devices or drivers implement this, so this may
@@ -348,8 +355,7 @@ On the other hand, one that doesn't support them won't print anything:
 Refer to linkman:upsd.users[5] for information on defining
 users in `upsd`.
 
-upscmd
-~~~~~~
+### upscmd
 
 Some UPS hardware and drivers support the notion of an instant command -
 a feature such as starting a battery test, or powering off the load.
@@ -372,8 +378,7 @@ To define users and passwords in `upsd`, see
 linkman:upsd.users[5].
 
 
-CGI Programs
-------------
+## CGI Programs
 
 The CGI programs are clients that run through your web server.  They
 allow you to see UPS status and perform certain administrative commands
@@ -396,8 +401,7 @@ they can be found at these URLs:
 	http://www.gzip.org/zlib/
 
 
-Access Restrictions
-~~~~~~~~~~~~~~~~~~~
+### Access Restrictions
 
 The CGI programs use hosts.conf to see if they are allowed to talk to a
 host.  This keeps malicious visitors from creating queries from your web
@@ -406,8 +410,7 @@ server to random hosts on the Internet.
 If you get error messages that say "Access to that host is not
 authorized", you're probably missing an entry in your hosts.conf.
 
-upsstats
-~~~~~~~~
+### upsstats
 
 `upsstats` generates web pages from HTML templates, and plugs in status
 information in the right places.  It looks like a distant relative of
@@ -416,32 +419,27 @@ systems or just focus on one.
 
 It also can generate IMG references to `upsimage`.
 
-upsimage
-~~~~~~~~
+### upsimage
 
 This is usually called by upsstats via IMG SRC tags to draw either the
 utility or outgoing voltage, battery charge percent, or load percent.
 
-upsset
-~~~~~~
+### upsset
 
-`upsset` provides several useful administration functions through a web
-interface.  You can use `upsset` to kick off instant commands on your UPS
-hardware like running a battery test.  You can also use it to change
-variables in your UPS that accept user-specified values.
+`upsset` provides several useful administration functions through a web interface.
+You can use `upsset` to kick off instant commands on your UPS hardware like running a battery test.
+You can also use it to change variables in your UPS that accept user-specified values.
 
-Essentially, `upsset` provides the functions of `upsrw` and `upscmd`, but
-with a happy pointy-clicky interface.
+Essentially, `upsset` provides the functions of `upsrw` and `upscmd`, but with a happy pointy-clicky interface.
 
-`upsset` will not run until you convince it that you have secured your
-system.  You *must* secure your CGI path so that random interlopers
-can't run this program remotely.  See the `upsset.conf` file.  Once you
-have secured the directory, you can enable this program in that
-configuration file.  It is not active by default.
+`upsset` will not run until you convince it that you have secured your system.
+You *must* secure your CGI path so that random interlopers can't run this program remotely.
+See the `upsset.conf` file.
+Once you have secured the directory, you can enable this program in that configuration file.
+It is not active by default.
 
 
-Version Numbering
------------------
+## Version Numbering
 
 The version numbers work like this: if the middle number is odd, it's a
 development tree, otherwise it is the stable tree.
@@ -457,7 +455,7 @@ list.  There have also been a number of architectural changes which
 may not be noticeable to most users, but which can impact developers.
 
 
-== Backwards and Forwards Compatibility ==
+## Backwards and Forwards Compatibility
 
 The old network code spans a range from about 0.41.1 when TCP support 
 was introduced up to the recent 1.4 series.  It used variable names
@@ -484,6 +482,23 @@ use the new names.
 
 Here's a table to make it easier to visualize:
 
+<table>
+    <tr>
+        <td>*Client version*</td>
+        <td>1.0</td>
+        <td>1.2</td>
+        <td>1.4</td>
+        <td>2.0+</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+    </tr>
+</table>
+
 [options="header"]
 |=============================================
 |                   4+| Server version
@@ -506,21 +521,19 @@ software can easily support both versions as long as they like.  If upsd
 returns 'ERR UNKNOWN-COMMAND' to a GET request, you need to use REQ.
 
 
-== Support / Help / etc. ==
+## Support / Help / etc.
 
 If you are in need of help, refer to the
 <<Support_Request,Support instructions>> in the user manual.
 
 
-== Hacking / Development Info ==
+## Hacking / Development Info
 
 Additional documentation can be found in:
+- the linkdoc:developer-guide[Developer Guide],
+- the linkdoc:packager-guide[Packager Guide].
 
-* the linkdoc:developer-guide[Developer Guide],
-* the linkdoc:packager-guide[Packager Guide].
 
+## Acknowledgements / Contributions
 
-== Acknowledgements / Contributions ==
-
-The many people who have participated in creating and improving NUT are
-listed in the user manual <<Acknowledgements,acknowledgements appendix>>.
+The many people who have participated in creating and improving NUT are listed in the user manual <<Acknowledgements,acknowledgements appendix>>.
