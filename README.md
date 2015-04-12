@@ -62,19 +62,19 @@ Other programs are also provided to log information regularly, monitor status th
 
 ## Installing
 
-If you are installing these programs for the first time, go read the <<_installation_instructions,installation instructions>> to find out how to do that. This document contains more information on what all of this stuff does.
+If you are installing these programs for the first time, go read the [Installation Instructions](http://www.networkupstools.org/docs/user-manual.chunked/ar01s05.html) to find out how to do that. This document contains more information on what all of this stuff does.
 
 
 ## Upgrading
 
-When upgrading from an older version, always check the <<Upgrading_notes,upgrading notes>> to see what may have changed.
+When upgrading from an older version, always check the [Upgrading Notes](http://www.networkupstools.org/docs/user-manual.chunked/api.html) to see what may have changed.
 
 Compatibility issues and other changes will be listed there to ease the process.
 
 
 ## Configuring and using
 
-Once NUT is installed, refer to the <<Configuration_notes,configuration notes>> for directions.
+Once NUT is installed, refer to the [Configuration Notes](http://www.networkupstools.org/docs/user-manual.chunked/ar01s06.html) for directions.
 
 
 ## Documentation
@@ -96,21 +96,27 @@ You can specify a port number if your upsd process runs on another port.
 
 In the case of the program `upsc`, to view the variables on the UPS called sparky on the `upsd` server running on the local machine, you'd do this:
 
-	/usr/local/ups/bin/upsc sparky@localhost
+```
+/usr/local/ups/bin/upsc sparky@localhost
+```
 
 The default port number is 3493.
 
-You can change this with "configure --with-port" at compile-time.
+You can change this with `configure --with-port` at compile-time.
 
 To make a client talk to upsd on a specific port, add it after the hostname with a colon, like this:
 
-	/usr/local/ups/bin/upsc sparky@localhost:1234
+```
+/usr/local/ups/bin/upsc sparky@localhost:1234
+```
 
 This is handy when you have a mixed environment and some of the systems are on different ports.
 
 The general form for UPS identifiers is this:
 
-	<upsname>[@<hostname>[:<port>]]
+```
+<upsname>[@<hostname>[:<port>]]
+```
 
 Keep this in mind when viewing the examples below.
 
@@ -119,11 +125,11 @@ Keep this in mind when viewing the examples below.
 
 This package is broken down into several categories:
 
-- *drivers*	- These programs talk directly to your UPS hardware.
-- *server*	- upsd serves data from the drivers to the network.
-- *clients*	- They talk to upsd and do things with the status data.
-- *cgi-bin*	- Special class of clients that you can use with your web server.
-- *scripts*	- Contains various scripts, like the Perl and Python binding, integration bits and applications. 
+* *drivers*	- These programs talk directly to your UPS hardware.
+* *server*	- upsd serves data from the drivers to the network.
+* *clients*	- They talk to upsd and do things with the status data.
+* *cgi-bin*	- Special class of clients that you can use with your web server.
+* *scripts*	- Contains various scripts, like the Perl and Python binding, integration bits and applications. 
 
 
 ## Drivers
@@ -139,7 +145,7 @@ driver = apcsmart
 port = /dev/ttyS1
 ```
 
-To start and stop drivers, use upsdrvctl. By default, it will start or stop every UPS in the config file:
+To start and stop drivers, use `upsdrvctl`. By default, it will start or stop every UPS in the config file:
 ```
 /usr/local/ups/sbin/upsdrvctl start
 /usr/local/ups/sbin/upsdrvctl stop
@@ -160,7 +166,7 @@ Some drivers may require additional settings to properly communicate with your h
 
 If it doesn't detect your UPS by default, check the driver's man page or help (-h) to see which options are available.
 
-For example, the usbhid-ups driver allows you to use USB serial numbers to distinguish between units via the "serial" configuration option.
+For example, the `usbhid-ups` driver allows you to use USB serial numbers to distinguish between units via the "serial" configuration option.
 
 To use this feature, just add another line to your ups.conf section for that UPS:
 
@@ -174,7 +180,7 @@ To use this feature, just add another line to your ups.conf section for that UPS
 
 ### Hardware Compatibility List
 
-The <<HCL,Hardware Compatibility List>> is available in the source directory ('nut-X.Y.Z/data/driver.list'), and is generally distributed with packages.
+The HCL - Hardware Compatibility List - is available in the source directory ('nut-X.Y.Z/data/driver.list'), and is generally distributed with packages.
 
 For example, it is available on Debian systems as:
 
@@ -184,47 +190,47 @@ For example, it is available on Debian systems as:
 
 This table is also available on official NUT website: [Stable Hardware Compatibility List](http://www.networkupstools.org/stable-hcl.html)
 
-If your driver has vanished, see the link: [FAQ](http://www.networkupstools.org/docs/FAQ.html) and <<Upgrading_notes,Upgrading notes>>.
+If your driver has vanished, see the link: [FAQ](http://www.networkupstools.org/docs/FAQ.html) and [Upgrading Notes](http://www.networkupstools.org/docs/user-manual.chunked/api.html).
 
 
 ### Generic Device Drivers
 
 NUT provides several generic drivers that support a variety of very similar models.
 
-- The `genericups` driver supports many serial models that use the same basic principle to communicate with the computer.  This is known as "contact closure", and basically involves raising or lowering signals to indicate power status.
+* The `genericups` driver supports many serial models that use the same basic principle to communicate with the computer.  This is known as "contact closure", and basically involves raising or lowering signals to indicate power status.
 +
-This type of UPS tends to be cheaper, and only provides the very simplest data about power and battery status.  Advanced features like battery charge readings and such require a "smart" UPS and a driver which supports it.
+This type of UPS tends to be cheaper, and only provides the very simplest data about power and battery status.
+
+Advanced features like battery charge readings and such require a "smart" UPS and a driver which supports it.
 +
 See the linkman:genericups[8] man page for more information.
 
-- The `usbhid-ups` driver attempts to communicate with USB HID Power Device
-Class (PDC) UPSes. These units generally implement the same basic protocol, with minor variations in the exact set of supported attributes. This driver also applies several correction factors when the UPS firmware reports values
-with incorrect scale factors.
+* The `usbhid-ups` driver attempts to communicate with USB HID Power Device Class (PDC) UPSes. These units generally implement the same basic protocol, with minor variations in the exact set of supported attributes. This driver also applies several correction factors when the UPS firmware reports values with incorrect scale factors.
 +
 See the linkman:usbhid-ups[8] man page for more information.
 
-- The `blazer_ser` and `blazer_usb` drivers supports the Megatec / Q1 protocol that is used in many brands (Blazer, Energy Sistem, Fenton Technologies, Mustek and many others).
+* The `blazer_ser` and `blazer_usb` drivers supports the Megatec / Q1 protocol that is used in many brands (Blazer, Energy Sistem, Fenton Technologies, Mustek and many others).
 +
 See the linkman:blazer[8] man page for more information.
 
-- The `snmp-ups` driver handles various SNMP enabled devices, from many different manufacturers. In SNMP terms, `snmp-ups` is a manager, that monitors SNMP agents.
+* The `snmp-ups` driver handles various SNMP enabled devices, from many different manufacturers. In SNMP terms, `snmp-ups` is a manager, that monitors SNMP agents.
 +
 See the linkman:snmp-ups[8] man page for more information.
 
-- The `powerman-pdu` is a bridge to the PowerMan daemon, thus handling all PowerMan supported devices. The PowerMan project supports several serial and networked PDU, along with Blade and IPMI enabled servers.
+* The `powerman-pdu` is a bridge to the PowerMan daemon, thus handling all PowerMan supported devices. The PowerMan project supports several serial and networked PDU, along with Blade and IPMI enabled servers.
 +
 See the linkman:powerman-pdu[8] man page for more information.
 
-- The `apcupsd-ups` driver is a bridge to the Apcupsd daemon, thus handling all Apcupsd supported devices. The Apcupsd project supports many serial, USB and networked APC UPS.
+* The `apcupsd-ups` driver is a bridge to the Apcupsd daemon, thus handling all Apcupsd supported devices. The Apcupsd project supports many serial, USB and networked APC UPS.
 +
 See the linkman:apcupsd-ups[8] man page for more information.
 
 
 ### UPS Shutdowns
 
-upsdrvctl can also shut down (power down) all of your UPS hardware.
+`upsdrvctl` can also shut down (power down) all of your UPS hardware.
 
-WARNING: if you play around with this command, expect your filesystems to die.
+> WARNING: if you play around with this command, expect your filesystems to die.
 
 Don't power off your computers unless they're ready for it:
 
@@ -233,7 +239,7 @@ Don't power off your computers unless they're ready for it:
 /usr/local/ups/sbin/upsdrvctl shutdown sparky
 ```
 
-You should read the <<UPS_shutdown,Configuring automatic UPS shutdowns>> chapter to learn more about when to use this feature.
+You should read the [UPS_shutdown - Configuring automatic UPS shutdowns](http://www.networkupstools.org/docs/user-manual.chunked/ar01s06.html#UPS_shutdown) chapter to learn more about when to use this feature.
 
 If called at the wrong time, you may cause data loss by turning off a system with a filesystem mounted read-write.
 
@@ -242,7 +248,7 @@ If called at the wrong time, you may cause data loss by turning off a system wit
 
 NUT also provides an advanced support for power distribution units.
 
-You should read the <<Outlets_PDU_notes,Configuring automatic UPS shutdowns>> chapter to learn more about when to use this feature.
+You should read the [Outlets_PDU_notes - Configuring automatic UPS shutdowns](http://www.networkupstools.org/docs/user-manual.chunked/ar01s06.html#UPS_shutdown) chapter to learn more about when to use this feature.
 
 
 ## Network Server
@@ -299,7 +305,7 @@ That means you run a driver, `upsd`, and `upsmon` in master mode.
 More information on configuring upsmon can be found in these places:
 * The linkman:upsmon[8] man page
 * <<BigServers,Typical setups for big servers>>
-* <<UPS_shutdown,Configuring automatic UPS shutdowns>> chapter
+* [UPS_shutdown - Configuring automatic UPS shutdowns](http://www.networkupstools.org/docs/user-manual.chunked/ar01s06.html#UPS_shutdown) chapter
 * The stock `upsmon.conf` that comes with the package
 
 
@@ -352,29 +358,24 @@ Not all devices or drivers implement this, so this may not have any effect on yo
 A driver that supports read/write variables will give results like this:
 
 ```
-	$ upsrw sparky@localhost
+$ upsrw sparky@localhost
+( many skipped )
 
-	( many skipped )
-
-	[ups.test.interval]
-	Interval between self tests
-	Type: ENUM
-	Option: "1209600"
-	Option: "604800" SELECTED
-	Option: "0"
-
-	( more skipped )
+[ups.test.interval]
+Interval between self tests
+Type: ENUM
+Option: "1209600"
+Option: "604800" SELECTED
+Option: "0"
+( more skipped )
 ```
-
 
 On the other hand, one that doesn't support them won't print anything:
 
 ```
-	$ upsrw fenton@gearbox
-
-	( nothing )
+$ upsrw fenton@gearbox
+( nothing )
 ```
-
 
 `upsrw` requires administrator powers to change settings in the hardware.
 Refer to linkman:upsd.users[5] for information on defining users in `upsd`.
@@ -388,14 +389,14 @@ You can use upscmd to list or invoke instant commands if your hardware/drivers s
 Use the -l command to list them, like this:
 
 ```
-	$ upscmd -l sparky@localhost
-	Instant commands supported on UPS [sparky@localhost]:
+$ upscmd -l sparky@localhost
+Instant commands supported on UPS [sparky@localhost]:
 
-	load.on - Turn on the load immediately
-	test.panel.start - Start testing the UPS panel
-	calibrate.start - Start run time calibration
-	calibrate.stop - Stop run time calibration
-	...
+load.on - Turn on the load immediately
+test.panel.start - Start testing the UPS panel
+calibrate.start - Start run time calibration
+calibrate.stop - Stop run time calibration
+...
 ```
 
 `upscmd` requires administrator powers to start instant commands. To define users and passwords in `upsd`, see linkman:upsd.users[5].
@@ -575,5 +576,4 @@ Additional documentation can be found on NUT official website:
 
 
 ## Acknowledgements And Contributions
-
-The many people who have participated in creating and improving NUT are listed in the user manual <<Acknowledgements,acknowledgements appendix>>.
+The many people who have participated in creating and improving NUT are listed in the user manual [Acknowledgements](http://www.networkupstools.org/docs/user-manual.chunked/apb.html).
