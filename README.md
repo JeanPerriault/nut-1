@@ -549,8 +549,7 @@ Here's a table to make it easier to visualize:
 </table>
 
 
-|                   4+| Server version         |
-
+|                     | Server version |
 | *Client version*    | 1.0 | 1.2 | 1.4 | 2.0+ |
 | ------------------- | --- | --- | --- | ---- |
 | 1.0                 | yes | yes | yes | no   |
