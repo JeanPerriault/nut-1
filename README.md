@@ -1,5 +1,8 @@
 # [Network UPS Tools](http://www.networkupstools.org)
 
+The primary goal of the Network UPS Tools (NUT) project is to provide support for Power Devices, such as Uninterruptible Power Supplies, Power Distribution Units and Solar Controllers.
+
+
 ## Table of contents
 
 * [Description](#description)
@@ -32,9 +35,9 @@
   * [upsset](#upsset)
 * [Version Numbering](#version-numbering)
 * [Backwards and Forwards Compatibility](#backwards-and-forwards-compatibility)
-* [Support / Help / etc.](#support-/-help-/-etc.)
-* [Hacking / Development Info](#hacking-/-development-info)
-* [Acknowledgements / Contributions](#acknowledgements-contributions)
+* [Support And Help](#support-and-help)
+* [Hacking And Development Info](#hacking-and-development-info)
+* [Acknowledgements And Contributions](#acknowledgements-and-contributions)
 
 
 ## Description
@@ -221,16 +224,18 @@ See the linkman:apcupsd-ups[8] man page for more information.
 
 upsdrvctl can also shut down (power down) all of your UPS hardware.
 
-WARNING: if you play around with this command, expect your filesystems
-to die.  Don't power off your computers unless they're ready for it:
+WARNING: if you play around with this command, expect your filesystems to die.
 
-	/usr/local/ups/sbin/upsdrvctl shutdown
-	/usr/local/ups/sbin/upsdrvctl shutdown sparky
+Don't power off your computers unless they're ready for it:
 
-You should read the <<UPS_shutdown,Configuring automatic UPS shutdowns>>
-chapter to learn more about when to use this feature.  If called at the wrong
-time, you may cause data loss by turning off a system with a filesystem
-mounted read-write.
+```
+/usr/local/ups/sbin/upsdrvctl shutdown
+/usr/local/ups/sbin/upsdrvctl shutdown sparky
+```
+
+You should read the <<UPS_shutdown,Configuring automatic UPS shutdowns>> chapter to learn more about when to use this feature.
+
+If called at the wrong time, you may cause data loss by turning off a system with a filesystem mounted read-write.
 
 ### Power distribution unit management
 
@@ -249,60 +254,65 @@ It should be run immediately after `upsdrvctl` in your system's startup scripts.
 
 `upsmon` provides the essential feature that you expect to find in UPS monitoring software: safe shutdowns when the power fails.
 
-In the layered scheme of NUT software, it is a client.  It has this separate section in the documentation since it is so important.
+In the layered scheme of NUT software, it is a client.
+
+It has this separate section in the documentation since it is so important.
 
 You configure it by telling it about UPSes that you want to monitor in upsmon.conf.
+
 Each UPS can be defined as one of two possible types:
 
 ### Master
 
 This UPS supplies power to the system running `upsmon`, and this system is also responsible for shutting it down when the battery is depleted.
+
 This occurs after any slave systems have disconnected safely.
 
 If your UPS is plugged directly into a system's serial port, the `upsmon` process on that system should define that UPS as a master.
 
 For a typical home user, there's one computer connected to one UPS.
+
 That means you run a driver, `upsd`, and `upsmon` in master mode.
 
 ### Slave
 
 This UPS may supply power to the system running `upsmon`, but this system can't shut it down directly.
 
-Use this mode when you run multiple computers on the same UPS.  Obviously, only one can be connected to the serial port on the UPS, and that system is the master.
+Use this mode when you run multiple computers on the same UPS.
+
+Obviously, only one can be connected to the serial port on the UPS, and that system is the master.
+
 Everything else is a slave.
 
 For a typical home user, there's one computer connected to one UPS.
-That means you run a driver, upsd, and upsmon in master mode.
+That means you run a driver, `upsd`, and `upsmon` in master mode.
 
 ### Additional Information
 
 More information on configuring upsmon can be found in these places:
-
-- The linkman:upsmon[8] man page
-- <<BigServers,Typical setups for big servers>>
-- <<UPS_shutdown,Configuring automatic UPS shutdowns>> chapter
-- The stock `upsmon.conf` that comes with the package
+* The linkman:upsmon[8] man page
+* <<BigServers,Typical setups for big servers>>
+* <<UPS_shutdown,Configuring automatic UPS shutdowns>> chapter
+* The stock `upsmon.conf` that comes with the package
 
 
 ## Clients
 
-Clients talk to upsd over the network and do useful things with the data
-from the drivers.  There are tools for command line access, and a few
-special clients which can be run through your web server as CGI
-programs.
+Clients talk to upsd over the network and do useful things with the data from the drivers.
+
+There are tools for command line access, and a few special clients which can be run through your web server as CGI programs.
 
 For more details on specific programs, refer to their man pages.
 
 ### upsc
 
-`upsc` is a simple client that will display the values of variables known
-to `upsd` and your UPS drivers.  It will list every variable by default,
-or just one if you specify an additional argument.  This can be useful
-in shell scripts for monitoring something without writing your own
-network code.
+`upsc` is a simple client that will display the values of variables known to `upsd` and your UPS drivers.  It will list every variable by default, or just one if you specify an additional argument.
 
-`upsc` is a quick way to find out if your driver(s) and upsd are working
-together properly.  Just run `upsc <ups>` to see what's going on, i.e.:
+This can be useful in shell scripts for monitoring something without writing your own network code.
+
+`upsc` is a quick way to find out if your driver(s) and upsd are working together properly.
+
+Just run `upsc <ups>` to see what's going on, i.e.:
 
 	morbo:~$ upsc sparky@localhost
 	ambient.humidity: 035.6
@@ -311,24 +321,21 @@ together properly.  Just run `upsc <ups>` to see what's going on, i.e.:
 	ambient.temperature: 25.14
 	...
 
-If you are interested in writing a simple client that monitors `upsd`,
-the source code for `upsc` is a good way to learn about using the
-upsclient functions.
+If you are interested in writing a simple client that monitors `upsd`, the source code for `upsc` is a good way to learn about using the upsclient functions.
 
-See the linkman:upsc[8] man page and
-<<nut-names,NUT command and variable naming scheme>> for more information.
+See the linkman:upsc[8] man page and <<nut-names,NUT command and variable naming scheme>> for more information.
 
 ### upslog
 
-`upslog` will write status information from `upsd` to a file at set
-intervals.  You can use this to generate graphs or reports with other
-programs such as `gnuplot`.
+`upslog` will write status information from `upsd` to a file at set intervals.
+
+You can use this to generate graphs or reports with other programs such as `gnuplot`.
 
 ### upsrw
 
-`upsrw` allows you to display and change the read/write variables in your
-UPS hardware.  Not all devices or drivers implement this, so this may
-not have any effect on your system.
+`upsrw` allows you to display and change the read/write variables in your UPS hardware.
+
+Not all devices or drivers implement this, so this may not have any effect on your system.
 
 A driver that supports read/write variables will give results like this:
 
@@ -352,8 +359,7 @@ On the other hand, one that doesn't support them won't print anything:
 	( nothing )
 
 `upsrw` requires administrator powers to change settings in the hardware.
-Refer to linkman:upsd.users[5] for information on defining
-users in `upsd`.
+Refer to linkman:upsd.users[5] for information on defining users in `upsd`.
 
 ### upscmd
 
@@ -499,41 +505,37 @@ Here's a table to make it easier to visualize:
     </tr>
 </table>
 
-[options="header"]
-|=============================================
-|                   4+| Server version
-| *Client version*    | 1.0 | 1.2 | 1.4 | 2.0+
-| 1.0                 | yes | yes | yes | no
-| 1.2                 | yes | yes | yes | no
-| 1.4                 | yes | yes | yes | yes
-| 2.0+                | no  | no  | yes | yes
-|=============================================
+|                   4+| Server version         |
+| *Client version*    | 1.0 | 1.2 | 1.4 | 2.0+ |
+|---------------------|-----|-----|-----|------|
+| 1.0                 | yes | yes | yes | no   |
+| 1.2                 | yes | yes | yes | no   |
+| 1.4                 | yes | yes | yes | yes  |
+| 2.0+                | no  | no  | yes | yes  |
 
-Version 2.0, and more recent, do not contain backwards compatibility for
-the old protocol and variable/command names.  As a result, 2.0 clients can't 
-talk to anything older than a 1.4 server.  If you ask a 2.0 client to 
-fetch "STATUS", it will fail.  You'll have to ask for "ups.status" 
-instead.
+Version 2.0, and more recent, do not contain backwards compatibility for the old protocol and variable/command names. As a result, 2.0 clients can't talk to anything older than a 1.4 server.
 
-Authors of separate monitoring programs should have used the 1.4 series
-to write support for the new variables and command names.  Client
-software can easily support both versions as long as they like.  If upsd
-returns 'ERR UNKNOWN-COMMAND' to a GET request, you need to use REQ.
+If you ask a 2.0 client to fetch "STATUS", it will fail. You'll have to ask for "ups.status" instead.
+
+Authors of separate monitoring programs should have used the 1.4 series to write support for the new variables and command names.
+
+Client software can easily support both versions as long as they like.
+
+If `upsd` returns 'ERR UNKNOWN-COMMAND' to a GET request, you need to use REQ.
 
 
-## Support / Help / etc.
+## Support And Help
 
-If you are in need of help, refer to the
-<<Support_Request,Support instructions>> in the user manual.
+If you are in need of help, refer to the <<Support_Request,Support instructions>> in the user manual.
 
 
-## Hacking / Development Info
+## Hacking And Development Info
 
 Additional documentation can be found in:
-- the linkdoc:developer-guide[Developer Guide],
-- the linkdoc:packager-guide[Packager Guide].
+* the linkdoc:developer-guide[Developer Guide],
+* the linkdoc:packager-guide[Packager Guide].
 
 
-## Acknowledgements / Contributions
+## Acknowledgements And Contributions
 
 The many people who have participated in creating and improving NUT are listed in the user manual <<Acknowledgements,acknowledgements appendix>>.
